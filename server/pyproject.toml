@@ -13,6 +13,7 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
+[project.optional-dependencies]
 
 [build-system]
 requires = ["pdm-pep517>=1.0.0"]
@@ -23,3 +24,10 @@ build-backend = "pdm.pep517.api"
 
 [tool.pdm.scripts]
 dev = "uvicorn src.main:app --reload"
+migrate = "alembic revision --autogenerate"
+push_db = "alembic upgrade head"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "alembic>=1.8.1",
+]
