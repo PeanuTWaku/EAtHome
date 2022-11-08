@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { ProfileDropdown } from "./ProfileDropdown";
+import { ProfileDropdown } from "./ProfileDropdown/ProfileDropdown";
 
-function Navbar() {
+export const MainNavbar = () => {
   return (
-    <nav className="w-full h-20 flex justify-between items-center px-8">
+    <nav className="w-full h-20 flex justify-between items-center px-8 z-10">
       <h1 className="text-2xl font-bold">
         <Link to="/">EAtHome</Link>
       </h1>
@@ -23,6 +23,4 @@ function Navbar() {
       </ul>
     </nav>
   );
-}
-
-export default Navbar;
+};

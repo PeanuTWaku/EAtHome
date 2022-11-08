@@ -1,16 +1,17 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./layouts/Navbar/Navbar";
+import { MainLayout } from "./layouts/MainLayout";
+import { HomePage } from "./pages/HomePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
-    <div>
-      <Navbar />
+    <MainLayout>
       <Routes>
-        <Route path="/" element={<h1>home</h1>} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/account-settings" element={<h1>account-settings</h1>} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </div>
+    </MainLayout>
   );
 }
 
