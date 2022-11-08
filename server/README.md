@@ -10,11 +10,22 @@ pdm run dev
 
 ## Database
 
-### Start PostgreSQL Docker Container
+### Start PostgreSQL + pgAdmin Docker Container
 
 ```sh
-docker-compose up
+docker compose up
 ```
+
+- PostgreSQL Default Settings
+  - Hostname: db
+  - Port: 5432
+  - Database: postgres
+  - Username: postgres
+  - Password: changeme
+- pgAdmin Default Settings
+  - URL: http://localhost:5050
+  - Email: pgadmin4@pgadmin.org
+  - Password: admin
 
 ### Run Migration
 
@@ -24,7 +35,7 @@ pdm run migrate -m "description"
 
 > If a new model is added, the model should be imported in `migrations/env.py`
 
-### Upgrade Database
+### Apply Migrations to Database
 
 ```sh
 pdm run push_db

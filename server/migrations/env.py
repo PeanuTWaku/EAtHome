@@ -1,6 +1,8 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
+import dotenv
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connection
@@ -29,6 +31,15 @@ target_metadata = SQLModel.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+dotenv.load_dotenv()
+DB_USER = os.environ.get("POSTGRES_USER")
+DB_PASS = os.environ.get("POSTGRES_PASSWORD")
+DB_NAME = os.environ.get("POSTGRES_DB")
+DB_HOST = os.environ.get("POSTGRES_HOST", "localhost")
+config.set_main_option(
+    "sqlalchemy.url",
+    f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}",
+)
 
 
 def run_migrations_offline() -> None:
