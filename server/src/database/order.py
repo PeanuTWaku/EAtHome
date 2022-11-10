@@ -20,28 +20,6 @@ class OrderMethod(Enum):
     DELIVERY = "delivery"
 
 
-class OrderRead(SQLModel):
-    """Represent the response model for an order."""
-
-    id: int
-    status: OrderStatus
-    created_at: datetime = Field(alias="createdAt")
-    finished_at: datetime | None = Field(alias="finishedAt")
-    method: OrderMethod
-    subtotal: int
-    delivery_fee: int = Field(alias="deliveryFee")
-
-
-class OrderCreate(SQLModel):
-    """Represent the input fields for creating an order."""
-
-    status: OrderStatus
-    created_at: datetime
-    method: OrderMethod
-    subtotal: int = Field(ge=0)
-    delivery_fee: int = Field(ge=0)
-
-
 class Order(SQLModel, table=True):
     """Represent the fields of an order stored in database."""
 
@@ -58,6 +36,32 @@ class Order(SQLModel, table=True):
 
     shopname: str = Field(foreign_key="shop.name")
     shop: "Shop" = Relationship(back_populates="orders")
+
+
+class OrderRead(SQLModel):
+    """Represent the response model for an order."""
+
+    id: int
+    status: OrderStatus
+    created_at: datetime = Field(alias="createdAt")
+    finished_at: datetime | None = Field(alias="finishedAt")
+    method: OrderMethod
+    subtotal: int
+    delivery_fee: int = Field(alias="deliveryFee")
+
+    class Config:
+        # allow initialized by field names, but response in aliases
+        allow_population_by_field_name = True
+
+
+class OrderCreate(SQLModel):
+    """Represent the input fields for creating an order."""
+
+    status: OrderStatus
+    created_at: datetime = Field(alias="createdAt")
+    method: OrderMethod
+    subtotal: int = Field(ge=0)
+    delivery_fee: int = Field(ge=0, alias="deliveryFee")
 
 
 class OrderUpdate(SQLModel):

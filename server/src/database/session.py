@@ -11,7 +11,6 @@ engine = create_async_engine(
     DB_URI,
     echo=True,
     future=True,
-    connect_args=dict(check_same_thread=False),
 )
 
 AsyncSessionLocal = sessionmaker(
