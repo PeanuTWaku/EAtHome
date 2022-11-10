@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlmodel import SQLModel  # isort:skip
 
 """import sql models here"""
+from src.database import Order, Shop, User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
