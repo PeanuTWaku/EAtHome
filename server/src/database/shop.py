@@ -1,10 +1,9 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
+    from .order import Order
     from .user import User
 
 
@@ -40,8 +39,11 @@ class Shop(SQLModel, table=True):
     longitude: float = Field(ge=-180, le=180)
     revenue: int = Field(default=0, ge=0)
 
-    owner_name: str
-    owner: User = Relationship(back_populates="shopname")
+    owner_name: str = Field(foreign_key="uesr.name")
+    owner: "User" = Relationship(back_populates="shop")
+
+    order_ids: list[int] = Field(foreign_key="order.id")
+    orders: list["Order"] = Relationship(back_populates="shop")
 
 
 class ShopUpdate(SQLModel):
