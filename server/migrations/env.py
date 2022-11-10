@@ -32,13 +32,14 @@ target_metadata = SQLModel.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 dotenv.load_dotenv()
-DB_USER = os.environ.get("POSTGRES_USER")
-DB_PASS = os.environ.get("POSTGRES_PASSWORD")
-DB_NAME = os.environ.get("POSTGRES_DB")
-DB_HOST = os.environ.get("POSTGRES_HOST", "localhost")
+DB_DRIVER = os.environ.get("DB_DRIVER", "postgresql+asyncpg")
+DB_USER = os.environ.get("DB_USER", "postgres")
+DB_PASS = os.environ.get("DB_PASSWORD", "changeme")
+DB_NAME = os.environ.get("DB_NAME", "postgres")
+DB_HOST = os.environ.get("DB_HOST", "localhost")
 config.set_main_option(
     "sqlalchemy.url",
-    f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}",
+    f"{DB_DRIVER}://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}",
 )
 
 
