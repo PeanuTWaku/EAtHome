@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
+    from .link import OrderProductLink
     from .shop import Shop
     from .user import User
 
@@ -36,6 +37,8 @@ class Order(SQLModel, table=True):
 
     shopname: str = Field(foreign_key="shop.name")
     shop: "Shop" = Relationship(back_populates="orders")
+
+    product_links: list["OrderProductLink"] = Relationship(back_populates="order")
 
 
 class OrderRead(SQLModel):

@@ -4,6 +4,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from .order import Order
+    from .product import Product
     from .user import User
 
 
@@ -20,6 +21,7 @@ class Shop(SQLModel, table=True):
     owner: "User" = Relationship(back_populates="shop")
 
     orders: list["Order"] = Relationship(back_populates="shop")
+    products: list["Product"] = Relationship(back_populates="shop")
 
 
 class ShopRead(SQLModel):
