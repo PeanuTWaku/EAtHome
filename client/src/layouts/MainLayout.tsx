@@ -4,9 +4,9 @@ import { MainNavbar } from "./MainNavbar/MainNavbar";
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-full flex flex-col">
       <MainNavbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-1 py-4">{children}</main>
       <MainFooter />
     </div>
   );
