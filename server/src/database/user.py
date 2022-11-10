@@ -12,7 +12,7 @@ class UserRead(SQLModel):
     """Represent the response model for a user."""
 
     account: str
-    display_name: str
+    display_name: str = Field(alias="displayName")
     phone: str
     latitude: float
     longitude: float
@@ -26,7 +26,7 @@ class UserCreate(SQLModel):
 
     account: str = Field(regex=r"\w+")
     password: str
-    display_name: str
+    display_name: str = Field(alias="displayName")
     phone: str = Field(regex=r"09\d{8}")
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
@@ -51,7 +51,7 @@ class UserUpdate(SQLModel):
     """Represent the fields of a user that can be updated through api routes."""
 
     password: Optional[str] = None
-    display_name: Optional[str] = None
+    display_name: Optional[str] = Field(default=None, alias="displayName")
     phone: Optional[str] = Field(default=None, regex=r"09\d{8}")
     latitude: Optional[float] = Field(default=None, ge=-90, le=90)
     longitude: Optional[float] = Field(default=None, ge=-180, le=180)

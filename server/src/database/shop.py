@@ -17,7 +17,7 @@ class ShopRead(SQLModel):
     longitude: float
     revenue: int
 
-    owner_name: str
+    owner_name: str = Field(alias="ownerName")
 
 
 class ShopCreate(SQLModel):
@@ -28,7 +28,7 @@ class ShopCreate(SQLModel):
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
 
-    owner_name: str
+    owner_name: str = Field(alias="ownerName")
 
 
 class Shop(SQLModel, table=True):
@@ -40,7 +40,7 @@ class Shop(SQLModel, table=True):
     longitude: float = Field(ge=-180, le=180)
     revenue: int = Field(default=0, ge=0)
 
-    owner_name: str
+    owner_name: str = Field(alias="ownerName")
     owner: User = Relationship(back_populates="shopname")
 
 
