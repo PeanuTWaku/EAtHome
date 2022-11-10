@@ -5,6 +5,7 @@ from sqlmodel import Field, Relationship, SQLModel
 if TYPE_CHECKING:
     from .order import Order
     from .shop import Shop
+    from .trade_record import TradeRecord
 
 
 class User(SQLModel, table=True):
@@ -19,8 +20,8 @@ class User(SQLModel, table=True):
     balance: int = Field(default=0, ge=0)
 
     shop: Optional["Shop"] = Relationship(back_populates="owner")
-
     orders: list["Order"] = Relationship(back_populates="customer")
+    trade_records: list["TradeRecord"] = Relationship(back_populates="user")
 
 
 class UserRead(SQLModel):
