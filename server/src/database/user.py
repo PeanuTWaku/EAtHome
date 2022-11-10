@@ -1,10 +1,9 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
+    from .order import Order
     from .shop import Shop
 
 
@@ -18,7 +17,7 @@ class UserRead(SQLModel):
     longitude: float
     balance: int
 
-    shopname: Optional[str]
+    shopname: str | None
 
 
 class UserCreate(SQLModel):
@@ -43,15 +42,18 @@ class User(SQLModel, table=True):
     longitude: float = Field(ge=-180, le=180)
     balance: int = Field(default=0, ge=0)
 
-    shopname: Optional[str] = Field(None, foreign_key="shop.name")
-    shop: Optional[Shop] = Relationship(back_populates="owner")
+    shopname: str | None = Field(None, foreign_key="shop.name")
+    shop: "Shop" | None = Relationship(back_populates="owner")
+
+    order_ids: list[int] = Field(None, foreign_key="order.id")
+    orders: list["Order"] = Relationship(back_populates="customer")
 
 
 class UserUpdate(SQLModel):
     """Represent the fields of a user that can be updated through api routes."""
 
-    password: Optional[str] = None
-    display_name: Optional[str] = Field(default=None, alias="displayName")
-    phone: Optional[str] = Field(default=None, regex=r"09\d{8}")
-    latitude: Optional[float] = Field(default=None, ge=-90, le=90)
-    longitude: Optional[float] = Field(default=None, ge=-180, le=180)
+    password: str | None = None
+    display_name: str | None = None
+    phone: str | None = Field(default=None, regex=r"09\d{8}")
+    latitude: float | None = Field(default=None, ge=-90, le=90)
+    longitude: float | None = Field(default=None, ge=-180, le=180)
