@@ -1,7 +1,8 @@
 from typing import Any, Generic, Type, TypeVar
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import SQLModel, select
+
+from ..database import AsyncSession
 
 ModelType = TypeVar("ModelType", bound=SQLModel)
 ModelUpdate = TypeVar("ModelUpdate", bound=SQLModel)
