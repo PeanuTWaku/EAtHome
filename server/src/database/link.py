@@ -17,8 +17,7 @@ class OrderProductLink(SQLModel, table=True):
 
 
 class OrderProductLinkRead(SQLModel):
-    order_id: int
-    product_id: int
+    product: Product
     quantity: int
 
 

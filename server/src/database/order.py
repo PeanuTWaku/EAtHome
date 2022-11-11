@@ -5,7 +5,8 @@ from typing import TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .link import OrderProductLink
+    from .link import OrderProductLink, OrderProductLinkRead
+    from .product import ProductRead
     from .shop import Shop
     from .user import User
 
@@ -55,6 +56,12 @@ class OrderRead(SQLModel):
     class Config:
         # allow initialized by field names, but response in aliases
         allow_population_by_field_name = True
+
+
+class OrderProductRead(OrderRead):
+    """Represent the response model for an order and the products in it."""
+
+    products: list["OrderProductLinkRead"]
 
 
 class OrderCreate(SQLModel):
