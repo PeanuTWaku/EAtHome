@@ -1,5 +1,8 @@
 from typing import Any, Generic, Type, TypeVar
 
+from pydantic import ValidationError
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import SQLModel, select
 
 from ..database import AsyncSession
@@ -26,9 +29,13 @@ class BaseQuery(Generic[ModelType, ModelCreate, ModelUpdate]):
         return result.scalars().all()
 
     async def create(self, session: AsyncSession, obj: ModelCreate) -> ModelType:
-        db_obj = self.model.from_orm(obj)
-        session.add(db_obj)
-        await session.commit()
+        try:
+            db_obj = self.model.from_orm(obj)
+            session.add(db_obj)
+            await session.commit()
+        except (IntegrityError, ValidationError):
+            return None
+
         await session.refresh(db_obj)
         return db_obj
 

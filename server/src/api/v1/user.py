@@ -36,7 +36,12 @@ async def read_user(session: AsyncSession = Depends(get_session), *, account: st
 async def sign_up_user(
     session: AsyncSession = Depends(get_session), *, user: UserCreate
 ):
-    return await query.user.create(session, user)
+    if (created_user := await query.user.create(session, user)) is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Account {user.account!r} has been used",
+        )
+    return created_user
 
 
 @router.patch("/me", response_model=UserRead)
